@@ -1,6 +1,6 @@
 import SleepyClient from "../index";
 import {
-    BitFieldResolvable,
+    BitFieldResolvable, Guild,
     GuildMember,
     Message,
     MessageAttachment,
@@ -9,7 +9,7 @@ import {
     TextChannel,
     User
 } from "discord.js";
-import {CommandOptions, Data, SleepyDurrResults} from '../structures/Interface';
+import {CaseOptions, CommandOptions, Data, SleepyDurrResults} from '../structures/Interface';
 import request from 'node-superfetch';
 import moment from "moment";
 require('moment-duration-format');
@@ -254,5 +254,24 @@ export default class Functions {
         if (message.guild.ownerID === message.author.id) return true;
 
         return message.member.roles.highest.rawPosition > member.roles.highest.rawPosition;
+    }
+
+    async appendCaseNumber(ID: string) {
+        if (!this.client.db.get('cases')) {
+            await new this.client.db.table('cases');
+            this.client.db.set(`cases.${ID}.cases`, []);
+            return 0;
+        }
+
+        const cases = this.client.db.get(`cases.${ID}.cases`);
+        const caseNumber = cases.map((c: CaseOptions) => c.caseNumber).sort((a: number, b: number) => b - a);
+        return caseNumber[0];
+    }
+
+    async fetchCase(guild: Guild, caseNumber: number) {
+        const cases = this.client.db.get(`cases.${guild.id}.cases`);
+        const findCase = cases.filter((c: CaseOptions) => c.caseNumber === caseNumber);
+        if (!findCase) return null;
+        return findCase[0];
     }
 }

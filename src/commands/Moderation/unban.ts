@@ -31,7 +31,7 @@ export = class UnbanCommand extends Command {
             const reason = bans.get(args[0]).reason;
             await message.guild.members.unban(user.id);
             await this.client.functions.sendEmbed(message, null, null, 'Member Unbanned', null,
-                `Successfully unbanned ${user.tag} [${user.id}]`, null, null, null, null, null, 30000);
+                `Successfully unbanned ${user.tag} [${user.id}]`, null, null, null, null, null, null);
 
             const modlog = this.client.functions.getModLogChannel(message);
             if (modlog) return this.client.functions.sendToChannel(modlog, 'Member Unbanned',

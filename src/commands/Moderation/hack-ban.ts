@@ -1,7 +1,6 @@
 import Command from '../Command';
 import SleepyClient from "../../index";
 import {Message} from 'discord.js';
-import {Args, Lexer, longStrategy, Parser} from "lexure";
 
 export = class HackBanCommand extends Command {
     constructor(client: SleepyClient) {
@@ -27,9 +26,15 @@ export = class HackBanCommand extends Command {
             const reason = args.slice(1).join(' ');
 
             await message.guild.members.ban(args[0], {reason: reason});
+
+            const caseNumber = await this.client.functions.appendCaseNumber(message.guild.id);
+            this.client.db.push(`cases.${message.guild.id}.cases`, {caseNumber:caseNumber + 1, action:'Hack Ban', member_tag:null, member_id:args[0], reason:reason,
+                moderator:message.author.tag, date:Date.now()});
+
             await this.client.functions.sendEmbed(message, null, null, 'Successfully Banned', null,
                 `User with ID **${args[0]}** [<@${args[0]}>] was banned.
-                Reason: ${reason ? reason : 'No reason provided'}`, null, null, null, null, null, 15000);
+                Reason: ${reason ? reason : 'No reason provided'}
+                Case #: ${caseNumber + 1}`, null, null, null, null, null, null);
 
             const modlog = this.client.functions.getModLogChannel(message);
 
@@ -37,7 +42,8 @@ export = class HackBanCommand extends Command {
                 `Member: <@${args[0]}> [${args[0]}]
                             Action: Banned (hackban)
                             Reason: ${reason ? reason : 'No reason provided'}
-                            Moderator: ${message.author.tag}`);
+                            Moderator: ${message.author.tag},
+                            Case #: ${caseNumber + 1}`);
         } catch (err) {
             return this.client.functions.sendEmbed(message, null, null, 'Hack Ban Error', null, err.message);
         }

@@ -53,10 +53,16 @@ export = class BanCommand extends Command {
             if (['y', 'yes'].includes(m.content)) {
                 try {
                     await member.ban({reason: reason, days: days});
+
+                    const caseNumber = await this.client.functions.appendCaseNumber(message.guild.id);
+                    this.client.db.push(`cases.${message.guild.id}.cases`, {caseNumber:caseNumber + 1, action:'Ban', member_tag:member.user.tag, member_id:member.id, reason:reason,
+                        moderator:message.author.tag, date:Date.now()});
+
                     await this.client.functions.sendEmbed(message, null, null, 'Member Banned', null,
                         `Successfully banned **${member.user.tag} [${member.user.tag}]**
-                        Reason: ${reason ? reason : 'No reason provided'}`,
-                        null, member.user.displayAvatarURL({dynamic: true, size: 256}));
+                        Reason: ${reason ? reason : 'No reason provided'}
+                        Case #: ${caseNumber + 1}`,
+                        null, member.user.displayAvatarURL({dynamic: true, size: 256}), null, null, null, null);
 
                     const modlog = this.client.functions.getModLogChannel(message);
 
@@ -65,7 +71,8 @@ export = class BanCommand extends Command {
                             Action: Banned
                             Days: ${days}
                             Reason: ${reason ? reason : 'No reason provided'}
-                            Moderator: ${message.author.tag}`, member.user.displayAvatarURL({dynamic: true, size: 512}));
+                            Moderator: ${message.author.tag}
+                            Case #: ${caseNumber + 1}`, member.user.displayAvatarURL({dynamic: true, size: 512}));
                 } catch (err) {
                     return this.client.functions.sendEmbed(message, null, null, 'Ban Error', null, err.message);
                 }

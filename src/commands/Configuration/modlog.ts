@@ -7,8 +7,8 @@ export = class ModLogCommand extends Command {
         super(client, {
             name: 'modlog',
             description: 'Sets the channel for the moderation actions to log to',
-            usages: ['modlog <channel>', 'modlog disable'],
-            examples: ['modlog #staff-logs', 'modlog 794769397704032286'],
+            usages: ['modlog enable <channel>', 'modlog disable'],
+            examples: ['modlog enable #staff-logs', 'modlog 794769397704032286'],
             params: ['<channel> - Name or ID of the channel'],
             guildOnly: true,
             userPermissions: ['MANAGE_GUILD'],
@@ -21,13 +21,18 @@ export = class ModLogCommand extends Command {
 
         if (!modlog && !args[0]) return this.client.functions.sendEmbed(message, null, null, 'No modlog channel', null,
             `There is no modlog channel for this server yet.
-            Set the channel with \`${this.client.functions.getPrefix(message)}modlog <channel>\``, null, null, null, null, null,
+            Set the channel with \`${this.client.functions.getPrefix(message)}modlog enable <channel>\``, null, null, null, null, null,
             15000);
 
         if (!modlog && args[0] === "enable") {
             try {
-                const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0])
-                || message.guild.channels.cache.find(c => c.name === args[0]);
+                if (!args[1]) return this.client.functions.sendEmbed(message, null, null, 'No Channel Provided', null,
+                    `Please specify a channel to log to.
+                    Example: \`${this.client.functions.getPrefix(message)}modlog enable #staff-logs`, null, null, null, null, null,
+                    15000);
+
+                const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
+                    || message.guild.channels.cache.find(c => c.name === args[1]);
 
                 if (!channel) return this.client.functions.sendEmbed(message, null, null, 'Invalid Channel', null,
                     'The channel provided could not be found on the server.', null, null, null, null, null,

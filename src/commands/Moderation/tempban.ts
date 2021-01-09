@@ -50,11 +50,17 @@ export = class TempBanCommand extends Command {
 
         await member.ban({reason: reason});
 
+        const caseNumber = await this.client.functions.appendCaseNumber(message.guild.id);
+        this.client.db.push(`cases.${message.guild.id}.cases`, {caseNumber:caseNumber + 1, action:'Temporary Ban', member_tag:member.user.tag, member_id:member.id, reason:reason,
+            moderator:message.author.tag, date:Date.now(), banDuration:bantime});
+
         this.client.db.push(`bans.${message.guild.id}.infractions`, {tag:member.user.tag,member:member.id,guild:message.guild.id,reason:reason,date:Date.now(),moderator:message.author.id,bantime:bantime});
 
-        await this.client.functions.sendEmbed(message, null, null, 'Member Banned', null,
+        await this.client.functions.sendEmbed(message, null, null, 'Member Temp Banned', null,
             `Successfully banned ${member.user.tag} [${member.id}] 
-            Duration: ${args.slice(1, 2).join(' ')}`);
+            Duration: ${args.slice(1, 2).join(' ')}
+            Reason: ${reason ? reason : 'No reason provided'}
+            Case #: ${caseNumber + 1}`, null, null, null, null, null, null);
 
         const modlog = this.client.functions.getModLogChannel(message);
         if (modlog) await this.client.functions.sendToChannel(modlog, 'Member Banned',
@@ -63,6 +69,7 @@ export = class TempBanCommand extends Command {
             Ban issued: ${moment.utc(Date.now()).format("dddd, MMMM Do YYYY | HH:mm:ss")}
             Ban ending: ${moment.utc(bantime).format("dddd, MMMM Do YYYY | HH:mm:ss")}
             Reason: ${reason ? reason : 'No reason provided'}
-            Moderator: ${message.author.tag}`);
+            Moderator: ${message.author.tag}
+            Case #: ${caseNumber + 1}`);
     }
 }

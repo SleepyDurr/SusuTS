@@ -42,3 +42,14 @@ export interface SleepyDurrConfig {
     OWNER_IDs?: string,
     MASTER_ID?: string
 }
+
+export interface CaseOptions {
+    caseNumber: number,
+    action: string,
+    member_tag: string,
+    member_id: string,
+    reason: string | null,
+    moderator: string,
+    date: Date,
+    banDuration?: number
+}

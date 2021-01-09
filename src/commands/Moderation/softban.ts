@@ -44,16 +44,22 @@ export = class SoftBanCommand extends Command {
         await member.ban({reason: reason, days: days});
         await message.guild.members.unban(member);
 
+        const caseNumber = await this.client.functions.appendCaseNumber(message.guild.id);
+        this.client.db.push(`cases.${message.guild.id}.cases`, {caseNumber:caseNumber + 1, action:'Softbanned', member_tag:member.user.tag, member_id:member.id, reason:reason,
+            moderator:message.author.tag, date:Date.now()});
+
         const modlog = this.client.functions.getModLogChannel(message);
 
         if (modlog) await this.client.functions.sendToChannel(modlog, 'Softbanned Member',
             `Member: ${member.user.tag} [${member.id}]
             Days: ${days}
             Reason: ${reason ? reason : 'No reason provided'}
-            Moderator: ${message.author.tag}`, member.user.displayAvatarURL({dynamic: true, size: 512}));
+            Moderator: ${message.author.tag}
+            Case #: ${caseNumber + 1}`, member.user.displayAvatarURL({dynamic: true, size: 512}));
         return this.client.functions.sendEmbed(message, null, null, 'Softbanned Member', null,
             `Successfully softbanned \`${member.user.tag} [${member.user.id}]\`
-            Reason: ${reason ? reason : 'No reason provided'}`, null, member.user.displayAvatarURL({dynamic: true, size: 512}), null, null,
-            null, 15000);
+            Reason: ${reason ? reason : 'No reason provided'}
+            Case #: ${caseNumber + 1}`, null, member.user.displayAvatarURL({dynamic: true, size: 512}), null, null,
+            null, null);
     }
 }

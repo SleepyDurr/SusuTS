@@ -50,10 +50,16 @@ export = class KickCommand extends Command {
             if (['y', 'yes'].includes(m.content)) {
                 try {
                     await member.kick(reason);
+
+                    const caseNumber = await this.client.functions.appendCaseNumber(message.guild.id);
+                    this.client.db.push(`cases.${message.guild.id}.cases`, {caseNumber:caseNumber + 1, action:'Kick', member_tag:member.user.tag, member_id:member.id, reason:reason,
+                        moderator:message.author.tag, date:Date.now()});
+
                     await this.client.functions.sendEmbed(message, null, null, 'Member Kicked', null,
                         `Successfully kicked **${member.user.tag} [${member.user.id}]**
-                            Reason: ${reason ? reason : 'No reason provided'}`, null,
-                        member.user.displayAvatarURL({dynamic: true, size: 256}));
+                            Reason: ${reason ? reason : 'No reason provided'}
+                            Case #: ${caseNumber + 1}`, null,
+                        member.user.displayAvatarURL({dynamic: true, size: 256}), null, null, null, null);
 
                     const modlog = this.client.functions.getModLogChannel(message);
 
@@ -61,7 +67,8 @@ export = class KickCommand extends Command {
                         `Member: ${member.user.tag} [${member.user.id}]
                             Action: Kicked
                             Reason: ${reason ? reason : 'No reason provided'}
-                            Moderator: ${message.author.tag}`, member.user.displayAvatarURL({dynamic: true, size: 512}));
+                            Moderator: ${message.author.tag}
+                            Case #: ${caseNumber + 1}`, member.user.displayAvatarURL({dynamic: true, size: 512}));
                 } catch (err) {
                     return this.client.functions.sendEmbed(message, null, null, 'Kick Error', null, err.message);
                 }
