@@ -1,0 +1,51 @@
+{
+  "MISSING_PERMISSION": {
+    "title": "Missing Permissions",
+    "description": "{who} have the correct permissions to execute `{cmdName}`\n[Missing Permissions: `{data}`]",
+    "delete": 15000
+  },
+  "EVENTS_FOLDER_MISSING": {
+    "description": "{cyanBright [EVENT_ERROR]} {redBright Events folder could not be found, please add it.}",
+    "stopProcess": true
+  },
+  "NO_EVENTS_FOUND": {
+    "description": "{cyanBright [EVENT_ERROR]} {redBright No events found -- cannot start}",
+    "stopProcess": true
+  },
+  "COMMANDS_FOLDER_MISSING": {
+    "description": "{cyanBright [COMMAND_ERROR]} {redBright Commands folder could not be found, please add it.}",
+    "stopProcess": true
+  },
+  "NO_RUN_METHOD": {
+    "title": "No Run Method",
+    "description": "The `{cmdName}` command has no run method\nContact `sleepy#8096` so it can be fixed."
+  },
+  "GLOBAL_COMMAND_DISABLED": {
+    "title": "Command Disabled",
+    "description": "The bot developer has disabled the `{cmdName}` command globally.\nShe may be working on it."
+  },
+  "COMMAND_DISABLED": {
+    "title": "Command Disabled",
+    "description": "The `{cmdName}` command is disabled on this server.\n*Staff taking away all the fun ;w;*"
+  },
+  "GUILD_ONLY_COMMAND": {
+    "title": "Guild Only",
+    "description": "The `{cmdName}` command can only be executed in a guild."
+  },
+  "OWNER_ONLY_COMMAND": {
+    "title": "Owner Only",
+    "description": "Only users with access to owner commands can use the `{cmdName}` command."
+  },
+  "BOT_OWNER_ONLY_COMMAND": {
+    "title": "Developer Command",
+    "description": "Only my master can use the `{cmdName}` command.\n*She doesn't like sharing*",
+    "delete": 15000
+  },
+  "NSFW_COMMAND": {
+    "title": "SFW Channel",
+    "description": "This is a SFW channel; I can only be lewd in NSFW channels ;w;"
+  },
+  "COMMAND_EXECUTED": {
+    "description": "{cyanBright [COMMAND]} {yellowBright {authorID}} {magentaBright triggered {cmdName} in} {yellowBright {channelID} {guild}}"
+  }
+}
