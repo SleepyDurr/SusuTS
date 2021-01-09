@@ -121,7 +121,9 @@ These commands can only be executed by the person hosting the bot
   
 ### Moderation
 * **ban** - Bans a user from the guild - set days to 0 if you don't want to delete messages
-  * ban [mention/ID] [days (0-7)] [reason],
+  * ban [mention/ID] [days (0-7)] [reason]
+* **case** - Fetches information about a specified case
+  * case [caseNumber]
 * **hack-ban** - Bans a user even if they aren't in the guild
   * hack-ban [ID] [reason]
 * **kick** - Kicks a user from the guild
