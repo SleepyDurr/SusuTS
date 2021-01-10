@@ -24,8 +24,8 @@ export = class ReloadCommand extends Command {
         if (!command) return this.client.functions.sendEmbed(message, null, null, 'Command Invalid', null,
             `A command with the name \`${args[0]}\` is not a valid command.`, null, null, null, null, null, 15000);
 
-        delete require.cache[require.resolve(`../${command.category}/${args[0]}`)];
-        this.client.loadCommand(command.category, args[0]);
+        delete require.cache[require.resolve(`../${command.category}/${command.name}`)];
+        this.client.loadCommand(command.category, command.name);
 
         return this.client.functions.sendEmbed(message, null, null, null, null, `Successfully reloaded \`${command.name}\``,
             null, null, null, null, null, 10000);
