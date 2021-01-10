@@ -271,7 +271,7 @@ export default class Functions {
 
     async fetchCase(guild: Guild, caseNumber: number) {
         const cases = this.client.db.get(`cases.${guild.id}.cases`);
-        const findCase = cases.filter((c: CaseOptions) => c.caseNumber === caseNumber);
+        const findCase = cases?.filter((c: CaseOptions) => c.caseNumber === caseNumber);
         if (!findCase) return null;
         return findCase[0];
     }
