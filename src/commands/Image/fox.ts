@@ -16,6 +16,7 @@ export = class FoxCommand extends Command {
     async run(message: Message) {
         const imageUrl: SleepyDurrResults = JSON.parse((await request.get('https://randomfox.ca/floof')).text).image;
 
-        return this.client.functions.sendEmbed(message, null, null, 'cute fox', null, null, imageUrl);
+        return this.client.functions.sendEmbed(message, null, null, 'cute fox', null, null, imageUrl,
+            null, null, null, null, 'keep');
     }
 }

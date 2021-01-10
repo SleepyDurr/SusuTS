@@ -16,6 +16,7 @@ export = class DogCommand extends Command {
     async run(message: Message) {
         const imageUrl: SleepyDurrResults = JSON.parse((await request.get('https://sleepydurr.uk/api/v2/animals/dog')).text).image.url;
 
-        return this.client.functions.sendEmbed(message, null, null, 'cute doggo', null, null, imageUrl);
+        return this.client.functions.sendEmbed(message, null, null, 'cute doggo', null, null, imageUrl,
+            null, null, null, null, 'keep');
     }
 }

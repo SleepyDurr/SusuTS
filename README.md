@@ -178,3 +178,5 @@ These commands can only be executed by the person hosting the bot
 * **ping** - Checks the bots latency
 * **purge** - Deletes x amount of messages (need MANAGE_MESSAGES permission)
   * purge [amount]
+
+<a href='https://ko-fi.com/F1F235C99' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>

@@ -27,7 +27,8 @@ export = class SfwFurryCommand extends Command {
                 } else if (furry_endpoints.includes(args[0])) {
                     const imageUrl = JSON.parse((await request.get(`https://sleepydurr.uk/api/v2/furry/sfw/sfw_fur_${args[0]}`)).text).image.url;
 
-                    return this.client.functions.sendEmbed(message, null, null, `furry - ${args[0]}`, null, null, imageUrl);
+                    return this.client.functions.sendEmbed(message, null, null, `furry - ${args[0]}`, null, null, imageUrl,
+                        null, null, null, null, 'keep');
                 } else {
                     return this.client.functions.sendEmbed(message, null, null, 'Image not found', null,
                         `An image with that tag does not exist.

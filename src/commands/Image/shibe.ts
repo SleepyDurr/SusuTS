@@ -16,6 +16,7 @@ export = class ShibeCommand extends Command {
     async run(message: Message) {
         const imageUrl: SleepyDurrResults = JSON.parse((await request.get('https://shibe.online/api/shibes')).text)[0];
 
-        return this.client.functions.sendEmbed(message, null, null, 'cute floof doggo', null, null, imageUrl);
+        return this.client.functions.sendEmbed(message, null, null, 'cute floof doggo', null, null, imageUrl,
+            null, null, null, null, 'keep');
     }
 }

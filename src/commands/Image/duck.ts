@@ -16,6 +16,7 @@ export = class DuckCommand extends Command {
     async run(message: Message) {
         const imageUrl: SleepyDurrResults = JSON.parse((await request.get('https://random-d.uk/api/v2/random')).text).url;
 
-        return this.client.functions.sendEmbed(message, null, null, 'cute ducky', null, null, imageUrl);
+        return this.client.functions.sendEmbed(message, null, null, 'cute ducky', null, null, imageUrl,
+            null, null, null, null, 'keep');
     }
 }

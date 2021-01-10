@@ -60,7 +60,7 @@ export default class Functions {
         return description;
     }
 
-    async sendEmbed(message: Message, author: string | null = null, authorURL: string | null = null, title: string | null = null, titleURL: string | null = null, description: string | null = null, image: string | null | SleepyDurrResults = null, thumbnail: string | null = null, footer: string | null = null, footerURL: string | null = null, fields: any = null , time: number | null = null) {
+    async sendEmbed(message: Message, author: string | null = null, authorURL: string | null = null, title: string | null = null, titleURL: string | null = null, description: string | null = null, image: string | null | SleepyDurrResults = null, thumbnail: string | null = null, footer: string | null = null, footerURL: string | null = null, fields: any = null , time: number | string = null): Promise<Message> {
         const embed = new MessageEmbed()
             .setColor("RANDOM");
         if (author) embed.setAuthor(author, authorURL);
@@ -76,12 +76,13 @@ export default class Functions {
             if (fieldKeys.length > 0) fieldKeys.forEach(key => embed.addField(key, fields[key].value, fields[key].inline));
         }
 
-        return message.channel.send(embed).then(msg => {
-            if (!time) return;
-            if (message.guild) setTimeout(() => {
-                msg.delete();
-            }, time || 1000 * 60 * 5);
-        });
+        const sentMessage = await message.channel.send(embed);
+
+        if (message.guild && time !== 'keep') setTimeout(() => {
+            sentMessage.delete();
+        }, <number>time || 1000 * 60 * 5);
+
+        return sentMessage;
     }
 
     async checkMention(message: Message, args: string[]): Promise<GuildMember | User> {
@@ -161,10 +162,10 @@ export default class Functions {
         if (command === 'image') {
             if (animalEndpoints.includes(endpoint)) {
                 const imageURL = (JSON.parse((await request.get(`${baseUrl}/animals/${endpoint}`)).text).image.url);
-                return this.sendEmbed(message, null, null, null, null, description, imageURL, null, null, null, {}, null);
+                return this.sendEmbed(message, null, null, null, null, description, imageURL, null, null, null, null, 'keep');
             } else if (animeEndpoints.includes(endpoint)) {
                 const imageURL = (JSON.parse((await request.get(`${baseUrl}/anime/sfw/${endpoint}`)).text).image.url);
-                return this.sendEmbed(message, null, null, null, null, description, imageURL, null, null, null, {}, null);
+                return this.sendEmbed(message, null, null, null, null, description, imageURL, null, null, null, null, 'keep');
             } else {
                 return this.sendEmbed(message, null, null, 'No image found', null, `I couldn't find an image with that tag.
                 You can find available tags **[here](https://sleepydurr.uk/api/v2/)**`);
