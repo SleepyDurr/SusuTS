@@ -92,6 +92,8 @@ These commands can only be executed by the person hosting the bot
 * **8ball** - Asks the magic 8ball a question
   * 8ball [question]
 * **cat-fact** - Displays a random fact about cats
+* **choose** - Chooses from a list of options
+  * choose Go to bed|Play games|Watch movies
 * **dog-fact** - Displays a random fact about dogs
 * **meme** - Displays a random meme from memes, dankmemes, or me_irl subreddits
 
