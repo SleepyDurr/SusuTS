@@ -21,7 +21,7 @@ Susu-Chan is a multi-purpose discord bot with commands ranging from moderation, 
 ### Avatar Manipulation
 All avatar manipulation commands can be executed like so:
 [command] or [command] [userMention/ID]
-* **avatar-fusion** - Combines the users avatar without another users avatar
+* **avatar-fusion** - Combines the users avatar over another users avatar
 * **blur** - Blurs the users avatar
 * **bob-ross** - Draws the avatar on Bob Ross' canvas
 * **brazzers** - Places the brazzers logo on the avatar
